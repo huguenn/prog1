@@ -25,6 +25,6 @@ void mostrat(int v[])
 {
   int i;
   for(i=0;i<TAM;i++)
-  printf("%4d\n",v[i]);
+  printf("%4d\n",v[i]); //el 4 es la cantidad de caracteres, sirve para alinear la salida
   printf("\n");
 }

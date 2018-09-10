@@ -12,4 +12,6 @@ if(ms<me)
   else
     mintot=ms-me;
 mintot/60,mintot%60);
-printf("Permanencia: %02d:%02d\n", );
+printf("Permanencia: %02d:%02d\n", mintot/60,mintot%60);
+return 0;
+}
