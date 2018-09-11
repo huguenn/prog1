@@ -7,9 +7,9 @@ int main ()
 	int **array;
 	int n, i, j, aux, contador=0;
 	//Solicito el tamaño del array
-	printf ("Introduce el tamanio del array: ");
+	printf ("Introduce el tamaño del array: ");
 	scanf ("%d",&n);
-	//Reservo la memoria para el array de NxN
+	//Reservo la memoria para el array de NxNs
 	array=(int**)malloc (n*sizeof (int*));
 	for (i=0;i<n;i++)
 		array[i]=(int*)malloc (n*sizeof (int));
