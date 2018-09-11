@@ -116,35 +116,38 @@ int buscar(struct persona l[], int desde, int hasta, char busc[])
         desde++;
     return desde<hasta?desde:-1; //si desde hasta es verdadero devuelve desde sino devuelve -1
 }
-int bajas (struct persona l[], int cant)
+
+int bajas(struct persona l[], int cant)
 {
-	int opc,j,desde;
-	char nom[LNOM];
-	ingresarCadena(nom,LNOM,"Nom Buscado: ");
-	while (cant>=0&&strlen(nom)>0)
+	int j, desde;
+	char nom[LNOM], opc;
+	ingresarCadena(nom, LNOM, "Nom: ");
+	while (cant > 0 && strlen(nom) > 0)
 	{
-		desde=buscar(l,0,cant,nom);
-		while(desde!=-1)
+		desde = buscar(l, 0, cant, nom);
+		while (desde != -1 && desde < cant)
 		{
 			printf("%s", l[desde].nombre);
 			printf("desea darle la baja?(S/N)\n");
-			scanf("%c",&opc);
+			scanf("%c", &opc);
 			sacarEnterCola();
-			if(toupper(opc)=='S')
+			if (toupper(opc) == 'S')
 			{
 				cant--;
-				for (j=desde;j<cant;j++)
-					l[j]=l[j+1];
+				for (j = desde; j < cant; j++)
+					l[j] = l[j + 1];
+				desde = buscar(l, desde, cant, nom);
 			}
 			else
 			{
-				desde=buscar(l,desde+1,cant,nom);
+				desde = buscar(l, desde + 1, cant, nom);
 			}
 		}
-		ingresarCadena(nom,LNOM,"Nom: ");
+		ingresarCadena(nom, LNOM, "Nom: ");
 	}
 	return cant;
 }
+
 void ordenar(struct persona l[], int n)
 {
     int ordenado=0,i=0,j;
