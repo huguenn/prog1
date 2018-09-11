@@ -4,6 +4,8 @@
 #define SUP 99
 #define INF 10
 #define tam 10
+void ingresarCadena(char,int,char);
+
 
 void ingresarCadena(char cad[],int tam,char mensaje[])
 {

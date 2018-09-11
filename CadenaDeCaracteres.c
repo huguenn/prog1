@@ -11,4 +11,4 @@ void ingresarCadena(char cad[],int tam, char mensaje[])
     ;//Esto es necesario para leer el buffer del teclado  ir vaciandolo
     else
       cad[i]='\o' //se supone que lo que nos sacó del while es el \n entonces se reemplaza el \n con un null para borrarlo.
-    }
+}

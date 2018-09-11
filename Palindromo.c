@@ -1,3 +1,7 @@
+// Decir si una función es capicua.
+
+
+
 #define MAX 33
 #include<stdio.h>
 #include<ctype.h>
@@ -52,26 +56,6 @@ int capicua (char cad[])
             {
                 capicua=0;
             }
-
-
-
-   /*
-            for (i = 0; i < MAX/2 ; i++)
-            {
-                    for (j = MAX-1; j > MAX/2; j--)
-                    {
-                            if (cad[i] != cad[j])
-                            {
-                                    capicua = 0;
-                            }
-                            else
-                            {
-                            capicua = 1;
-                            }
-
-                   }
-            }
-    */
             return capicua;
 
-}        
+}
