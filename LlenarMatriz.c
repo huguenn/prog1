@@ -10,7 +10,7 @@ void mostrar(int matriz[FIL][COL]);
 int main (void)
 {
   int matriz[FIL][COL];
-  int m[FIL][COL]={{0}};
+  int m[FIL][COL]={{0}}; //llena la matriz con 0
 //  cargar(matriz);
   mostrar(m);
   return 0;

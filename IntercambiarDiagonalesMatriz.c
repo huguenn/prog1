@@ -1,9 +1,8 @@
-#include  <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 int main ()
 {
-
 	int **array;
 	int n, i, j, aux, contador=0;
 	//Solicito el tamaño del array
@@ -14,11 +13,24 @@ int main ()
 	for (i=0;i<n;i++)
 		array[i]=(int*)malloc (n*sizeof (int));
 
+
+
+    int f, c; //Declaro mis variables para la carga de la matriz
+  	for (f = 0; f < F; f++)
+  	{
+  		for (c = 0; c < C; c++)
+  		{
+  			m[f][c] = rand() % (SUP - INF + 1) + INF; //cargo la fórmula para los rand, se suma el INF para que no arranque en cero
+  		}
+  	}
+
+
+
+
 	//Relleno el array
 	for (i=0;i<n;i++){
 		for (j=0;j<n;j++){
-			contador++;
-			array[i][j]=contador;
+      m[f][c] = rand() % (SUP - INF + 1) + INF; //cargo la fórmula para los rand, se suma el INF para que no arranque en cero
 		}
 	}
 
