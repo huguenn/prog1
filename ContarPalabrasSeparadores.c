@@ -1,6 +1,12 @@
-// Decir si una función es capicua.
+/*
+Ingresar una frase y contar la cantidad de palabras
+
+Las palabras están separadas por los caracteres: ‘;,;.-’
+Se pude usar la declaración de una cadena
+Char separadores[ ]=” : , ; espacio . - \’ \” ”;
 
 
+*/
 
 #define MAX 33
 #include<stdio.h>
@@ -10,7 +16,10 @@ void quitarespacio(char cad[]);
 int capicua (char cad[]);
 int main (void)
 {
-	char frase[] = "DABA EL ARROZ A LA ZORRA EL ABAD"; //inicializo la cadena
+	char frase[] = "cursando la materia prog 1: prueba, prueba 2"; //inicializo la cadena
+  char separadores[ ]=”:,;.-\’\””;
+
+
 	int a;
 		a = strlen(frase);
 	printf("La frase es %s\n", frase); //imprimo la cadena
@@ -30,7 +39,7 @@ return 0;
 void quitarespacio(char cad[])
 {
 	int i, j;
-	char cad2[MAX], *p; //p es un puntero, cuidado
+	char cad2[MAX], *p;
 
 		p = strchr(cad, ' '); //busco dirección del espacio
 		while (p) //mientras tenga una dirección
