@@ -66,24 +66,4 @@ int difFecha(struct fecha f1, struct fecha f2)
         f1.a++;
       }
 
-    //repetimos lo de arriba
-
-    //asterisco verde
-          while(f1.a==f2.a&&f1.m<f2.m) //mientras mismo año y dia distinto voy sumando las fechas
-          {
-            cant=cant+diasMes(f.m,f.a)
-            f1.d=1;
-            f1.m++;
-            if(f1.m>12)
-            {
-              f1.m=1;
-              f1.a++;
-            }
-          }
-          if(f1.m==f2.m){
-          cant=cant+f2.d;}
-    //asterisco verde
-        }
-        return cant;
-
 }
