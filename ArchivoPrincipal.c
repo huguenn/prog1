@@ -40,45 +40,45 @@ int main(void)
 /*
 La logica de esto es enviar a fseek al final y preguntar con ftell donde está.
 */
-int fileSize(FILE *pf)
+long int filesize(FILE*pf) //recibe un puntero a FILE
 {
-  long int posAct,posFin;
-  postAct=ftell(pf); //ftell devuevle un long int
-  fseek(pf,0L,SEEKEND);
-  posFin=ftell(pf);
-  fseek(pf,postAct,SEEKSET);
-  return posFin;
+	long int posicionactual, posicionfinal; //Long INT por que esto va a devolver eso el ftell (devuelve long int)
+	posicionactual = ftell(pf); //me dice a donde esta el indicador del archivo (que posición)
+	fseek(pf,0L,seekend); //función que permite mover la posición dentro del archivo, le tengo que decir cuantos lugares me quiero mover y respecto de quien. Se permite mover al comienzo, posición actual o al final (byte que le sigue a lo último escrito). Se puede usar seekend, seekcur o seekset. La "L" es por ser LONG INT.
+	posicionfinal = ftell(pf); //le pregunto la posición actual que es la final, ahora tnego inicio y fin.
+	fseek(pf, posicionactual, seekset); //lo vuelvo a mover al inicio, lo muevo hacia el inicio desde "poisicionesactuales
+	return posicionfinal;
 }
 
 
 
 int leerArch(struct persona alu[])
 {
-  FILE *pf=fopen("Lista.dat","rb");
-  int cant=0; //si no puede abrirlo o hay algun problema que el programa sepa que no pudo mediante un 0
-  if(pf)
-  {
-    cant=filesize(pf)/sizeof(struct persona); //con esto saco la cantidad de registros
-    fread(alu,sizeof(struct persona),cant,pf); //
-    fclose(pf);
-  }
-  else
-  {
-    print("Error\n")
-  }
-  return cant;
+	FILE * pf = fopen("Lista.dat", "rb"); // inicializo y abro mi archivo
+	int cant = 0; //variable para guardar la cantidad de registros.  Lo inicializa en cero, por que si no pude abrir el archivo, va a devolver cero
+	if (pf) //esto pregunta SI PUDE ABRIR EL ARCHIVO
+	{
+		cant = filesize(pf) / sizeof(struct persona); //esto da la cantidad de registros que hay.
+		fread(alu, sizeof(struct persona), cant, pf); //primer parametro la dirección deonde lo guardo (el vector), el tamaño de la estructura el segundo, la cantidad de registros y el archivo
+		fclose(pf);
+	}
+	else
+	{
+		printf("No se pudo leer el archivo\n");
+	}
+	return cant;
 }
-
-void guardarArchivo(struct persona alu[], int cant)
+void guardarArchivos(struct persona alu[], int cant)
 {
-  FILE *pf=fopen("Lista.dat", "wb"); //Puntero a file. Lo de binario acá es obligatorio
-  if(pf)// si puedo abrir el archivo lo que quiero hacer es guardar los datos
-  {
-    fwrite(alu,sizeof(struct persona),cant,pf);//lleva 4 parametros. 1 donde están los datos. fwrite espera dirección de memoria. Alu es el nombre de un vector, que es su dirección. & no va. Copia directamente el registro del size of y lo copia en el destino (memoria o disco, en este caso como es write es de memoria al disco)
-    fclose(pf);
-  }
-  else
-  {
-    print("No se pudo abrir el archivo\n");
-  }
+	FILE *pf;
+	*pf = fopen("lista.dat", "wb"); //abro el archivo lista.dat donde voy a escribir (para guardarlo) y es binario por el .dat
+	if (pf) //Si pude abrir el archivo quiere decir esto. Si pude, voy a guardar mis datos en el archivo.
+	{
+		fwrite(alu, sizeof(struct persona), cant, pf); //le paso: donde esta la info a guardar(le paso el vector, es decir, la dirección del vector, le paso el tamaño, para eso uso SIZEOF, le paso la cantidad de registros que los saco de CANT Y por último el archivo pf
+		fclose(pf); //Cierro el archivo
+	}
+	else
+	{
+		printf("No se pudo abrir el archivo\n");
+	}
 }

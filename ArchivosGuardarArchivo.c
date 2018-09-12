@@ -1,13 +1,14 @@
-void guardarArchivo(struct persona alu[], int cant)
+void guardarArchivos(struct persona alu[], int cant)
 {
-  FILE *pf=fopen("Lista.dat", "wb"); //Puntero a file. Lo de binario acá es obligatorio
-  if(pf)// si puedo abrir el archivo lo que quiero hacer es guardar los datos
-  {
-    fwrite(alu,sizeof(struct persona),cant,pf);//lleva 4 parametros. 1 donde están los datos. fwrite espera dirección de memoria. Alu es el nombre de un vector, que es su dirección. & no va. Copia directamente el registro del size of y lo copia en el destino (memoria o disco, en este caso como es write es de memoria al disco)
-    fclose(pf);
-  }
-  else
-  {
-    print("No se pudo abrir el archivo\n");
-  }
+	FILE *pf;
+	*pf = fopen("lista.dat", "wb"); //abro el archivo lista.dat donde voy a escribir (para guardarlo) y es binario por el .dat
+	if (pf) //Si pude abrir el archivo quiere decir esto. Si pude, voy a guardar mis datos en el archivo.
+	{
+		fwrite(alu, sizeof(struct persona), cant, pf); //le paso: donde esta la info a guardar(le paso el vector, es decir, la dirección del vector, le paso el tamaño, para eso uso SIZEOF, le paso la cantidad de registros que los saco de CANT Y por último el archivo pf
+		fclose(pf); //Cierro el archivo
+	}
+	else
+	{
+		printf("No se pudo abrir el archivo\n");
+	}
 }
