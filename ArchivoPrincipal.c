@@ -1,3 +1,25 @@
+/*
+sizeof(struct persona) es un tipo de dato y es lo importante a la hora de copiar los datos de memoria. Esto es lo que se pone a la hora del size of.
+sizeof(struct persona alu[]) seria el tamaño de un puntero
+*/
+
+int main(void)
+{
+  struct presona alu[MAX];
+  int cant=0,opc;
+    leerArch()
+  while((opc=menu())!=SALIR)
+  {
+    switch(opc)
+
+
+
+  }
+  guardarArchivo(alu,cant);
+  return 0;
+}
+
+
 void guardarArchivo(struct persona alu[], int cant)
 {
   FILE *pf=fopen("Lista.dat", "wb"); //Puntero a file. Lo de binario acá es obligatorio
