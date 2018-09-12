@@ -1,5 +1,4 @@
 // structuras abm de estructuras
-#define  _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -11,6 +10,7 @@
 #define SALIR 5
 #define LNOM 32
 #define LTEL 16
+
 struct fecha
 {
 	int d,m,a;
@@ -23,7 +23,6 @@ struct persona
 	int dni;
 	struct fecha nacim;
 };
-
 int menu();
 int altas (struct persona l[], int cant);
 int ingresarCadena(char cad[],int tam,char mensaje[]);
@@ -31,7 +30,9 @@ int buscar(struct persona l[], int desde, int hasta, char busc[]);
 int bajas (struct persona l[], int cant);
 void ordenar(struct persona l[], int n);
 void sacarEnterCola(void);
-
+void listar (struct persona l[],int n);
+void modificar (struct persona l[], int n);
+void remplazar(struct persona l[],int cant,int pos,char nom[]);
 
 int main (void)
 {
@@ -42,7 +43,7 @@ int main (void)
 		switch (opcion)
 		{
 			case ALTA:
-			printf("hola entraste\n");
+			//printf("hola entraste\n");
 			cant=altas(alu,cant);
 			ordenar(alu,cant);
 			break;
@@ -50,16 +51,25 @@ int main (void)
 			cant=bajas(alu,cant);// bajas no desordena por que se mueve todo uno para arriba.
 			break;
 			case MODIF:
-			//modificar(alu,cant);
+			modificar(alu,cant);
 			ordenar(alu,cant);// si hace falta
 			break;
 			case LISTA:
-			//listar(alu,cant);
+			listar(alu,cant);
 			break;
 		}
 	}
+	return 0;
 }
 
+/*int menu(void)
+{
+	int opc;
+		printf("1_Alta\n2_Baja\n3_Modif\n4_Listar\n5_Salir\n");
+		scanf("%d",&opc);//siempre hay que sacar la cola del teclado
+		printf("\n");
+	return opc;
+}*/
 int menu(void)
 {
   int opc;
@@ -75,8 +85,6 @@ int menu(void)
   while(opc<ALTA||opc>SALIR);
   return opc;
 }
-
-
 int altas (struct persona l[], int cant)
 {
   char nom[LNOM];
@@ -88,7 +96,7 @@ int altas (struct persona l[], int cant)
     printf("DNI: ");
     scanf("%d", &l[cant].dni);sacarEnterCola();
     printf("Fecha nac(d/m/a)");
-    scanf("%d/%d/%d",&l[cant].nacim.d, &l[cant].nacim.m,&l[cant].nacim.a);
+    scanf("%d/%d/%d", &l[cant].nacim.d,&l[cant].nacim.m,&l[cant].nacim.a);
     fgetc(stdin);
     cant++;
     if(cant<MAX)
@@ -116,7 +124,6 @@ int buscar(struct persona l[], int desde, int hasta, char busc[])
         desde++;
     return desde<hasta?desde:-1; //si desde hasta es verdadero devuelve desde sino devuelve -1
 }
-
 int bajas(struct persona l[], int cant)
 {
 	int j, desde;
@@ -147,8 +154,39 @@ int bajas(struct persona l[], int cant)
 	}
 	return cant;
 }
+void ordenar(struct persona l[], int n)
+{
+    int ordenado=0,i=0,j;
+    struct persona aux;
+    while(!ordenado)
+    {
+        ordenado=1;
+        for(j=0;j<n-1-i;j++)
+            if(strcmp(l[j].nombre,l[j+1].nombre)>0)
+            {
+                ordenado=0;
+                aux=l[j];
+                l[j]=l[j+1];
+                l[j+1]=aux;
+            }
+        i++;
+    }
+}
+void sacarEnterCola(void)
+{
+    while(fgetc(stdin)!='\n');
+}
+void listar (struct persona l[],int n)
+{
+	for (int i = 0; i < n; ++i)
+	{
+		printf("%s\n", l[i].nombre);
+		printf("%s\n", l[i].tel);
+		printf("%d\n", l[i].dni);
+		printf("%d/%d/%d\n", l[i].nacim.d,l[i].nacim.m,l[i].nacim.a);
 
-
+	}
+}
 void modificar (struct persona l[], int n)
 {
 	int esta;
@@ -177,29 +215,4 @@ void remplazar(struct persona l[],int cant,int pos,char nom[])
     printf("se remplazo correctamente");
 
     fgetc(stdin);
-}
-
-
-void ordenar(struct persona l[], int n)
-{
-    int ordenado=0,i=0,j;
-    struct persona aux;
-    while(!ordenado)
-    {
-        ordenado=1;
-        for(j=0;j<n-1-i;j++)
-            if(strcmp(l[j].nombre,l[j+1].nombre)>0)
-            {
-                ordenado=0;
-                aux=l[j];
-                l[j]=l[j+1];
-                l[j+1]=aux;
-            }
-        i++;
-    }
-}
-void sacarEnterCola(void)
-{
-    while(fgetc(stdin)!='\n');
-    ;
 }
