@@ -24,6 +24,7 @@ L
 
 
 // structuras abm de estructuras
+#define  _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -58,11 +59,15 @@ void sacarEnterCola(void);
 void listar (struct persona l[],int n);
 void modificar (struct persona l[], int n);
 void remplazar(struct persona l[],int cant,int pos,char nom[]);
+void guardararchivos(struct persona alu[], int cant);
+long int filesize(FILE*pf);
+int leerarchivos(struct persona alu[]);
 
 int main (void)
 {
 	struct persona alu[MAX];
 	int cant=0, opcion;
+
 	while ((opcion =menu())!=SALIR)
 	{
 		switch (opcion)
@@ -70,6 +75,7 @@ int main (void)
 			case ALTA:
 			//printf("hola entraste\n");
 			cant=altas(alu,cant);
+			guardararchivos(alu,cant);
 			ordenar(alu,cant);
 			break;
 			case BAJA:
@@ -92,6 +98,7 @@ int main (void)
 	int opc;
 		printf("1_Alta\n2_Baja\n3_Modif\n4_Listar\n5_Salir\n");
 		scanf("%d",&opc);//siempre hay que sacar la cola del teclado
+		fgetc("")
 		printf("\n");
 	return opc;
 }*/
@@ -129,7 +136,6 @@ int altas (struct persona l[], int cant)
     }
     return cant;
 }
-
 int ingresarCadena(char cad[],int tam,char mensaje[])
 {
 	int i;
@@ -242,24 +248,22 @@ void remplazar(struct persona l[],int cant,int pos,char nom[])
 
     fgetc(stdin);
 }
-
-
-/*
-La logica de esto es enviar a fseek al final y preguntar con ftell donde está.
-*/
-long int filesize(FILE*pf) //recibe un puntero a FILE
+void guardararchivos(struct persona alu[], int cant)
 {
-	long int posicionactual, posicionfinal; //Long INT por que esto va a devolver eso el ftell (devuelve long int)
-	posicionactual = ftell(pf); //me dice a donde esta el indicador del archivo (que posición)
-	fseek(pf,0L,seekend); //función que permite mover la posición dentro del archivo, le tengo que decir cuantos lugares me quiero mover y respecto de quien. Se permite mover al comienzo, posición actual o al final (byte que le sigue a lo último escrito). Se puede usar seekend, seekcur o seekset. La "L" es por ser LONG INT.
-	posicionfinal = ftell(pf); //le pregunto la posición actual que es la final, ahora tnego inicio y fin.
-	fseek(pf, posicionactual, seekset); //lo vuelvo a mover al inicio, lo muevo hacia el inicio desde "poisicionesactuales
-	return posicionfinal;
+	FILE *pf;
+	pf = fopen("lista.dat", "wb"); //abro el archivo lista.dat donde voy a escribir (para guardarlo) y es binario por el .dat
+	if (pf) //Si pude abrir el archivo quiere decir esto. Si pude, voy a guardar mis datos en el archivo.
+	{
+		fwrite(alu, sizeof(struct persona), cant, pf); //le paso: donde esta la info a guardar(le paso el vector, es decir, la dirección del vector, le paso el tamaño, para eso uso SIZEOF, le paso la cantidad de registros que los saco de CANT Y por último el archivo pf
+		fclose(pf); //Cierro el archivo
+	}
+	else
+	{
+		printf("No se pudo abrir el archivo\n");
+	}
 }
 
-
-
-int leerArch(struct persona alu[])
+int leerarchivos(struct persona alu[])
 {
 	FILE * pf = fopen("Lista.dat", "rb"); // inicializo y abro mi archivo
 	int cant = 0; //variable para guardar la cantidad de registros.  Lo inicializa en cero, por que si no pude abrir el archivo, va a devolver cero
@@ -275,17 +279,13 @@ int leerArch(struct persona alu[])
 	}
 	return cant;
 }
-void guardarArchivos(struct persona alu[], int cant)
+
+long int filesize(FILE*pf) //recibe un puntero a FILE
 {
-	FILE *pf;
-	*pf = fopen("lista.dat", "wb"); //abro el archivo lista.dat donde voy a escribir (para guardarlo) y es binario por el .dat
-	if (pf) //Si pude abrir el archivo quiere decir esto. Si pude, voy a guardar mis datos en el archivo.
-	{
-		fwrite(alu, sizeof(struct persona), cant, pf); //le paso: donde esta la info a guardar(le paso el vector, es decir, la dirección del vector, le paso el tamaño, para eso uso SIZEOF, le paso la cantidad de registros que los saco de CANT Y por último el archivo pf
-		fclose(pf); //Cierro el archivo
-	}
-	else
-	{
-		printf("No se pudo abrir el archivo\n");
-	}
+	long int posicionactual, posicionfinal; //Long INT por que esto va a devolver eso el ftell (devuelve long int)
+	posicionactual = ftell(pf); //me dice a donde esta el indicador del archivo (que posición)
+	fseek(pf,0L,SEEK_END); //función que permite mover la posición dentro del archivo, le tengo que decir cuantos lugares me quiero mover y respecto de quien. Se permite mover al comienzo, posición actual o al final (byte que le sigue a lo último escrito). Se puede usar seekend, seekcur o seekset. La "L" es por ser LONG INT.
+	posicionfinal = ftell(pf); //le pregunto la posición actual que es la final, ahora tnego inicio y fin.
+	fseek(pf, posicionactual, SEEK_SET); //lo vuelvo a mover al inicio, lo muevo hacia el inicio desde "poisicionesactuales
+	return posicionfinal;
 }
