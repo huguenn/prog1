@@ -1,4 +1,4 @@
-int leerArch(struct persona alu[])
+int leerarchivos(struct persona alu[])
 {
 	FILE * pf = fopen("Lista.dat", "rb"); // inicializo y abro mi archivo
 	int cant = 0; //variable para guardar la cantidad de registros.  Lo inicializa en cero, por que si no pude abrir el archivo, va a devolver cero
