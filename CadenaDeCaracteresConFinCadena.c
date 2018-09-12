@@ -12,4 +12,4 @@ int ingresarCadena(char cad[],int tam, char mensaje[]) //cambiamos de void a int
     else
       cad[i]='\o' //se supone que lo que nos sacó del while es el \n entonces se reemplaza el \n con un null para borrarlo.
       return i; // aca devolveriamos el final de la cadena
-    }
+}
