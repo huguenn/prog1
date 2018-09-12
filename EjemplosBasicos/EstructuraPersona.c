@@ -148,6 +148,38 @@ int bajas(struct persona l[], int cant)
 	return cant;
 }
 
+
+void modificar (struct persona l[], int n)
+{
+	int esta;
+	char nom[LNOM];
+  	ingresarCadena(nom,LNOM,"Nombre: ");
+	esta=buscar(l, 0, n, nom);
+	if (esta!=-1)
+	{
+		remplazar(l,n,esta,nom);
+	}
+	else
+	{
+		printf("el nombre no se encuentra\n");
+	}
+}
+
+void remplazar(struct persona l[],int cant,int pos,char nom[])
+{
+
+    strcpy(l[pos].nombre,nom);
+    ingresarCadena(l[pos].tel,LTEL,"TE: ");
+    printf("DNI: ");
+    scanf("%d", &l[pos].dni);sacarEnterCola();
+    printf("Fecha nac(d/m/a)");
+    scanf("%d/%d/%d", &l[pos].nacim.d,&l[pos].nacim.m,&l[pos].nacim.a);
+    printf("se remplazo correctamente");
+
+    fgetc(stdin);
+}
+
+
 void ordenar(struct persona l[], int n)
 {
     int ordenado=0,i=0,j;
