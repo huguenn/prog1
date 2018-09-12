@@ -104,6 +104,7 @@ int altas (struct persona l[], int cant)
     }
     return cant;
 }
+
 int ingresarCadena(char cad[],int tam,char mensaje[])
 {
 	int i;
