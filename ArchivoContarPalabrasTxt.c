@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#define LEER_ARCHIVO "Origen.txt"
+#define LEER_ARCHIVO "Origen.txt" //Agregado para que funcione con archivos
 typedef enum { FALSO, VERDAD } boolean; //creamos el booleano donde typedef enum designa 0 para el primer valor y 1 para el segundo, 3 para el tercero y así sucesivamente
 //en este caso para que FALSO sea 0 y VERDADERO 1 se coloca primero FALSO y después VERDADERO
 
@@ -9,10 +9,9 @@ bool EsSeparador(char); //Prototipo para EsSeparador
 int main(void)//Inicio función main ******************************
 {
 	bool EnPalabra = FALSO; //Inicializamos en Palabran en FALSO que gracias a lo que hicimos al principio es equivalente a 0
-    FILE * pf;
+    FILE * pf; //Agregado para que funcione con archivos
     int cantPal = 0;
-    int cantLin = 0;
-    char c;
+    char c; //Inicio Agregado para que funcione con archivos
     pf=fopen(LEER_ARCHIVO, "rt");
     if(pf==NULL)
     {
@@ -20,7 +19,7 @@ int main(void)//Inicio función main ******************************
         return 0;
     }
 
-    while((c=fgetc(pf)) != EOF) {
+    while((c=fgetc(pf)) != EOF) {  //Fin Agregado para que funcione con archivos. Preguntar si el EOF está bien usado/es una buena practica
 		if (!EnPalabra) //Hacer esto cuando EnPalabra sea FALSO es decir si no está en palabra hay que hacer buscar si el caracter es un separador
 		{
 			if (!EsSeparador(c))/* inicio palabra - Entramos en la supuesta palabra, utilizando la función EsSeparador vemos si el caracter es un separador */
