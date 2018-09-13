@@ -43,6 +43,7 @@ int main(void)//Inicio función main ******************************
                 c=fgetc(pf);
 		}
 	printf("Cantidad de palabras: %d\n", cantPal);  //mostramos la magia de cuantas palabras obtenemos
+	fclose(pf);
 	return 0; //Importante. debe devolver algo porque main tiene un int en la declaración
 } //Fin función main **********************************************
 
