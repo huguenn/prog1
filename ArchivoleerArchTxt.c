@@ -2,7 +2,7 @@ int leerArchTxt(struct persona alu[])
 {
   int cant=0;
   char nom[LNOM+1];
-  FILE *pf=fopen("Lista.txt","st");
+  FILE *pf=fopen("Lista.txt","rt");
   if(pf==NULL)
   {
     printf("No se puede abrir el archivo \n");
