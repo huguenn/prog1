@@ -10,8 +10,8 @@ int main(void)//Inicio función main ******************************
 {
     bool EnPalabra = FALSO; //Inicializamos en Palabran en FALSO que gracias a lo que hicimos al principio es equivalente a 0
     FILE * pf; //Agregado para que funcione con archivos
-    int cantPal = 0;
-    char c,d,nombrearchivo[100]; //Inicio Agregado para que funcione con archivos
+    int cantPal = 0,i;
+    char c,d,nombrearchivo[100], palabras[50]; //Inicio Agregado para que funcione con archivos
     printf("Ingresar Archivo a contar: ");
     scanf("%s", &nombrearchivo);
     pf=fopen(nombrearchivo, "rt");
@@ -23,6 +23,7 @@ int main(void)//Inicio función main ******************************
 
     //while((c=fgetc(pf)) != EOF)
     c=fgetc(pf);
+		i=0
     while(!feof(pf))
 		{  //Fin Agregado para que funcione con archivos. Preguntar si el EOF está bien usado/es una buena practica
 			if (!EnPalabra) //Hacer esto cuando EnPalabra sea FALSO es decir si no está en palabra hay que hacer buscar si el caracter es un separador
@@ -31,13 +32,18 @@ int main(void)//Inicio función main ******************************
 				{
 					EnPalabra = VERDAD; // en caso que lo sea, aplicamos VERDAD
 					cantPal++; //Incrementamos el contador de palabras
+					palabras[i]=c;				//Guarda en un string para que forme la palabra
+					i++;
 				}
 			}
 			else
 			{
 				if (EsSeparador(c)) /* fin palabra - Volvemos a usar EsSeparador para verificar que lo que tenemos como caracter sea un separador */
-                            	{
+      	{
 					EnPalabra = FALSO;  //Asignamos un FALSO y volvemos a empezar
+					palabras[i]='\n';
+					printf("%c",palabras);
+					i=0;
 				}
 			}
                 c=fgetc(pf);
