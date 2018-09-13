@@ -11,7 +11,7 @@ int leerArchTxt(struct persona alu[])
   fgets(nom,LNOM,pf);
   while(!feof(pf))
   {
-    *strchr(nom,'\n')='\o';
+    *strchr(nom,'\n')='\o'; //lo hace para que se pueda hacer
     strcpy(alu[cant].nombre,nom);
     fgets(alu[cant].tel,LTEL,pf);
     *strchr(alu[cant].tel,'\n')='\o';
