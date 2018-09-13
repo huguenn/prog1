@@ -13,7 +13,7 @@ int main(void)//Inicio función main ******************************
     int cantPal = 0;
     char c,d,nombrearchivo[100]; //Inicio Agregado para que funcione con archivos
     printf("Ingresar Archivo a contar: ");
-    scanf("%s", nombrearchivo);
+    scanf("%s", &nombrearchivo);
     pf=fopen(nombrearchivo, "rt");
     if(pf==NULL)
     {
