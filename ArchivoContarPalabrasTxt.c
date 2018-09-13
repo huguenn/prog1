@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#define LEER_ARCHIVO "Origen.txt" //Agregado para que funcione con archivos
+//#define LEER_ARCHIVO "Origen.txt" //Agregado para que funcione con archivos
 typedef enum { FALSO, VERDAD } boolean; //creamos el booleano donde typedef enum designa 0 para el primer valor y 1 para el segundo, 3 para el tercero y así sucesivamente
 //en este caso para que FALSO sea 0 y VERDADERO 1 se coloca primero FALSO y después VERDADERO
 
@@ -8,34 +8,40 @@ bool EsSeparador(char); //Prototipo para EsSeparador
 
 int main(void)//Inicio función main ******************************
 {
-	bool EnPalabra = FALSO; //Inicializamos en Palabran en FALSO que gracias a lo que hicimos al principio es equivalente a 0
+    bool EnPalabra = FALSO; //Inicializamos en Palabran en FALSO que gracias a lo que hicimos al principio es equivalente a 0
     FILE * pf; //Agregado para que funcione con archivos
     int cantPal = 0;
-    char c; //Inicio Agregado para que funcione con archivos
-    pf=fopen(LEER_ARCHIVO, "rt");
+    char c,d,nombrearchivo[100]; //Inicio Agregado para que funcione con archivos
+    printf("Ingresar Archivo a contar: ");
+    scanf("%s", nombrearchivo);
+    pf=fopen(nombrearchivo, "rt");
     if(pf==NULL)
     {
         printf("No se puede abrir el archivo \n");
-        return 0;
+        return 1;
     }
 
-    while((c=fgetc(pf)) != EOF) {  //Fin Agregado para que funcione con archivos. Preguntar si el EOF está bien usado/es una buena practica
-		if (!EnPalabra) //Hacer esto cuando EnPalabra sea FALSO es decir si no está en palabra hay que hacer buscar si el caracter es un separador
-		{
-			if (!EsSeparador(c))/* inicio palabra - Entramos en la supuesta palabra, utilizando la función EsSeparador vemos si el caracter es un separador */
+    //while((c=fgetc(pf)) != EOF)
+    c=fgetc(pf);
+    while(!feof(pf))
+		{  //Fin Agregado para que funcione con archivos. Preguntar si el EOF está bien usado/es una buena practica
+			if (!EnPalabra) //Hacer esto cuando EnPalabra sea FALSO es decir si no está en palabra hay que hacer buscar si el caracter es un separador
 			{
-				EnPalabra = VERDAD; // en caso que lo sea, aplicamos VERDAD
-				cantPal++; //Incrementamos el contador de palabras
+				if (!EsSeparador(c))/* inicio palabra - Entramos en la supuesta palabra, utilizando la función EsSeparador vemos si el caracter es un separador */
+				{
+					EnPalabra = VERDAD; // en caso que lo sea, aplicamos VERDAD
+					cantPal++; //Incrementamos el contador de palabras
+				}
 			}
-		}
-		else
-		{
-			if (EsSeparador(c)) /* fin palabra - Volvemos a usar EsSeparador para verificar que lo que tenemos como caracter sea un separador */
+			else
 			{
-				EnPalabra = FALSO;  //Asignamos un FALSO y volvemos a empezar
+				if (EsSeparador(c)) /* fin palabra - Volvemos a usar EsSeparador para verificar que lo que tenemos como caracter sea un separador */
+                            	{
+					EnPalabra = FALSO;  //Asignamos un FALSO y volvemos a empezar
+				}
 			}
+                c=fgetc(pf);
 		}
-	}
 	printf("Cantidad de palabras: %d\n", cantPal);  //mostramos la magia de cuantas palabras obtenemos
 	return 0; //Importante. debe devolver algo porque main tiene un int en la declaración
 } //Fin función main **********************************************
