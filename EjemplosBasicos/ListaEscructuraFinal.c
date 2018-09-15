@@ -17,6 +17,7 @@ typedef nodo *pnodo;
 pnodo armarlista(pnodo inicio, pnodo nuevo);
 pnodo abrirArch(pnodo inicio ,pnodo nuevo);
 void listar(pnodo inicio);
+pnodo Buscar(pnodo inicio,char patente[]);
 
 int main (void)
 {
@@ -30,6 +31,7 @@ int main (void)
 pnodo abrirArch(pnodo inicio ,pnodo nuevo)
 {
 	FILE *pf=fopen("patente.txt","rt");
+	pnodo esta;
 	  char pat[LPAT+1];
 	  if(pf==NULL)
 	  {
@@ -41,16 +43,29 @@ pnodo abrirArch(pnodo inicio ,pnodo nuevo)
 	  {
 	  	nuevo=(pnodo)malloc(sizeof(nodo));
 	    *strchr(pat,'\n')='\0';
-	    strcpy(nuevo->patente,pat);
-	    fscanf(pf,"%d:%d",&nuevo->horauno,&nuevo->minuno);
-	    fgetc(pf);
-	    fgets(nuevo->localidad,LLOC,pf);
-	    fscanf(pf,"%d",&nuevo->nlocal);
-	    fgetc(pf);
-	    inicio=armarlista(inicio,nuevo);
+	    esta=Buscar(inicio,pat);
+	    if (esta)
+	    {
+	    	strcpy(esta->patente,pat);
+		    fscanf(pf,"%d:%d",&esta->horados,&esta->mindos);
+		    fgetc(pf);
+		    fgets(esta->localidad,LLOC,pf);
+		    fscanf(pf,"%d",&esta->nlocal);
+		    fgetc(pf);
+	    }else
+	    {
+	    	strcpy(nuevo->patente,pat);
+		    fscanf(pf,"%d:%d",&nuevo->horauno,&nuevo->minuno);
+		    fgetc(pf);
+		    fgets(nuevo->localidad,LLOC,pf);
+		    fscanf(pf,"%d",&nuevo->nlocal);
+		    fgetc(pf);
+		    inicio=armarlista(inicio,nuevo);
+	    }
+
+
 	    fgets(pat,LPAT,pf);
 	  }
-	  printf("aca\n");
 	  fclose(pf);
 	  return inicio;
 }
@@ -65,16 +80,17 @@ void listar(pnodo inicio){
 	while(inicio!=NULL)
 	{
 		printf("patente: %s\n",inicio->patente);
+		printf("hora uno %d:%d: \n",inicio->horauno,inicio->minuno);
+		printf("hora uno %d:%d: \n",inicio->horados,inicio->mindos);
 		inicio=inicio->psig;
 	}
 
 }
-
-
-int Buscar(pnodo inicio,char patente)
+pnodo Buscar(pnodo inicio,char patente [])
 {
-  while(inicio!=NULL)
-  {
-    
-  }
+	while(inicio!=NULL && strcmp(inicio->patente,patente)!=0)
+	{
+		inicio=inicio->psig;
+	}
+	return inicio;
 }
